@@ -1,0 +1,31 @@
+.main_page {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.options {
+    min-width: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.options-label {
+    min-width: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.chart-options {
+    min-width: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    padding-top: 20px;
+}
+
+.equity {
+    font-size: 24px;
+    text-align: center;
+    padding-top: 20px;
+}
