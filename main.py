@@ -41,6 +41,8 @@ def test(df, filename: str):
     
     print(tabulate(dataframe, headers='keys', tablefmt='pretty'))
 
+
+
 def main(strat, chart):
     with open('src\components\config.json', 'r') as json_file:
         settings = json.load(json_file)
