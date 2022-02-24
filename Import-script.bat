@@ -8,4 +8,3 @@ start pip install pandas
 start pip install json
 
 echo "All libaries are installed"
-pause

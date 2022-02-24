@@ -44,11 +44,11 @@ def test(df, filename: str):
 
 
 def main(strat, chart):
-    with open('src\components\config.json', 'r') as json_file:
+    with open('components\config.json', 'r') as json_file:
         settings = json.load(json_file)
 
     tickerSymbol = settings['tickerSymbol']
-    df = fecthData(tickerSymbol, False)
+    df = fecthData(tickerSymbol, True)
     
     def graph_chart(chart):
         height = 800
@@ -62,18 +62,18 @@ def main(strat, chart):
             df1 = SMA_result[1]
 
             if chart.lower() == 'candlestick':
-                fig = go.Figure(data=[go.Candlestick(name=f'{tickerSymbol} Price', open=df1['Open'], 
-                    high=df1['High'], low=df1['Low'], close=df1['Close'])], )
+                fig = go.Figure(data=[go.Candlestick(x = df.index, name=f'{tickerSymbol} Price', open=df1['Open'], 
+                    high=df1['High'], low=df1['Low'], close=df1['Close'])])
 
             elif chart.lower() == 'line chart':
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(y=df1['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
+                fig.add_trace(go.Scatter(x = df.index, y = df1['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
                     line=dict(color='black', width=2)))
 
-            fig.add_trace(go.Scatter(y=df1[f'SMA {SMA1}'],mode='lines', name= f'SMA {SMA1}'))
-            fig.add_trace(go.Scatter(y=df1[f'SMA {SMA2}'],mode='lines', name= f'SMA {SMA2}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df1[f'SMA {SMA1}'], mode='lines', name= f'SMA {SMA1}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df1[f'SMA {SMA2}'], mode='lines', name= f'SMA {SMA2}'))
             fig.update_layout(height=height)
-            
+
             return fig, SMA_result[0]
 
         if strat.lower() == 'ema':
@@ -86,19 +86,17 @@ def main(strat, chart):
             df2 = EMA_result[1]
 
             if chart.lower() == 'candlestick':
-                fig = go.Figure(data=[go.Candlestick(name=f'{tickerSymbol} Price', open=df2['Open'], 
+                fig = go.Figure(data=[go.Candlestick(x = df.index, name=f'{tickerSymbol} Price', open=df2['Open'], 
                     high=df2['High'], low=df2['Low'], close=df2['Close'])])
             elif chart.lower() == 'line chart':
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(y=df2['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
+                fig.add_trace(go.Scatter(x = df.index, y=df2['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
                     line=dict(color='black', width=2)))
 
-            fig.add_trace(go.Scatter(y=df2[f'EMA {EMA1}'],mode='lines', name= f'EMA {EMA1}'))
-            fig.add_trace(go.Scatter(y=df2[f'EMA {EMA2}'],mode='lines', name= f'EMA {EMA2}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df2[f'EMA {EMA1}'], mode='lines', name= f'EMA {EMA1}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df2[f'EMA {EMA2}'], mode='lines', name= f'EMA {EMA2}'))
             fig.update_layout(height=height)
 
             return fig, EMA_result[0]
         
-        
-
     return graph_chart(chart)

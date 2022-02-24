@@ -20,13 +20,13 @@ def generate_table(dataframe, max_rows=100):
 
 
 def updateJSON(id, value):
-    json_file = open('src\components\config.json', 'r')
+    json_file = open('components\config.json', 'r')
     Json_config = json.load(json_file)
     json_file.close()
 
     Json_config[f'{id}'] = value
 
-    json_file = open('src\components\config.json', 'w')
+    json_file = open('components\config.json', 'w')
     json.dump(Json_config, json_file)
     json_file.close()
 
@@ -34,7 +34,7 @@ def updateJSON(id, value):
 interval_range = ['1m', '2m', '5m', '15m', '30m',
                   '60m', '90m', '1d', '5d', '1wk', '1mo', '3mo']
 
-with open('src\components\config.json', 'r') as json_file:
+with open('components\config.json', 'r') as json_file:
     settings = json.load(json_file)
 
 app.layout = html.Div(
