@@ -72,11 +72,13 @@ app.layout = html.Div(
                 dcc.Dropdown(['Candlestick', 'line chart'], 'Candlestick', id='chart lines'),
             ]),
         html.H3(id='output-state', className='equity'),
-        dcc.Graph(id='price-graph')
+        dcc.Graph(id='price-graph'),
+        dcc.Graph(id='equity-graph')
     ])
 
 @app.callback(
     Output('price-graph', 'figure'),
+    Output('equity-graph', 'figure'),
     Output('output-state', 'children'),
     Input('button_update', 'n_clicks'),
     State('strat', 'value'),
@@ -96,8 +98,8 @@ def update_graph(n_clicks, strat, tickerSymbol, saldo, period, interval, chart):
     updateJSON('strat', strat)
 
     data = main(strat.lower(), chart)
-    return data[0], f'''Your equity efter a period over {period} is: {round(data[1], 2)} USD, 
-    your equity has increased by {round(100*((float(data[1])-float(saldo))/abs(float(saldo))))} %'''
+    return data[0], data[1], f'''Your equity efter a period over {period} is: {round(data[2], 2)} USD, 
+    your equity has increased by {round(100*((float(data[2])-float(saldo))/abs(float(saldo))))} %'''
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -1,10 +1,12 @@
-start pip install plotly
-start pip install dash
-start pip install yfinance
-start pip install tabulate
-start pip install tqdm
-start pip install matplotlib
-start pip install pandas
-start pip install json
+@echo off
+pip install plotly
+pip install dash
+pip install yfinance
+pip install tabulate
+pip install tqdm
+pip install matplotlib
+pip install pandas
+pip install json
 
+@echo on
 echo "All libaries are installed"

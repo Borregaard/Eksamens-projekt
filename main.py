@@ -74,7 +74,7 @@ def main(strat, chart):
             fig.add_trace(go.Scatter(x = df.index, y=df1[f'SMA {SMA2}'], mode='lines', name= f'SMA {SMA2}'))
             fig.update_layout(height=height)
 
-            return fig, SMA_result[0]
+            return fig, SMA_result[0], SMA_result[1]
 
         if strat.lower() == 'ema':
 
@@ -97,6 +97,14 @@ def main(strat, chart):
             fig.add_trace(go.Scatter(x = df.index, y=df2[f'EMA {EMA2}'], mode='lines', name= f'EMA {EMA2}'))
             fig.update_layout(height=height)
 
-            return fig, EMA_result[0]
+            return fig, EMA_result[0], EMA_result[1]
         
-    return graph_chart(chart)
+    graph_data = graph_chart(chart)
+
+    fig1 = go.Figure()
+    fig1.add_trace(go.Scatter(x = graph_data[2].index, y=graph_data[2]['equity'], mode='lines', name=f'Equity', 
+        line=dict(color='black', width=2)))
+        
+    return graph_data[0], fig1, graph_data[1]
+
+
