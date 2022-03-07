@@ -21,11 +21,11 @@ def test(df, filename: str):
             walletName = wallet(10000)
             walletName.smaValue(sma1, sma2)
             
-            df1 = df.copy()
-            df2 = df.copy()
+            df = df.copy()
+            df = df.copy()
 
-            SMA_results = SMAStrategy(walletName, sma1, sma2, df1)
-            EMA_results = EMAStrategy(walletName, sma1, sma2, df2)
+            SMA_results = SMAStrategy(walletName, sma1, sma2, df)
+            EMA_results = EMAStrategy(walletName, sma1, sma2, df)
 
             values = [walletName.sma1, walletName.sma2, SMA_results[0], EMA_results[0]]
             zipped = zip(columns, values)
@@ -48,62 +48,60 @@ def main(strat, chart):
         settings = json.load(json_file)
 
     tickerSymbol = settings['tickerSymbol']
-    df = fecthData(tickerSymbol, True)
+    dataframe = fecthData(tickerSymbol, True)
     
     def graph_chart(chart):
         height = 800
         if strat.lower() == 'sma':
 
-            df1 = df.copy()
+            df = dataframe.copy()
             Wallet = wallet(settings['saldo'])
             SMA1, SMA2 = 20, 50
 
-            SMA_result = SMAStrategy(Wallet, SMA1, SMA2, df1)
-            df1 = SMA_result[1]
+            equity, df = SMAStrategy(Wallet, SMA1, SMA2, df)
 
             if chart.lower() == 'candlestick':
-                fig = go.Figure(data=[go.Candlestick(x = df.index, name=f'{tickerSymbol} Price', open=df1['Open'], 
-                    high=df1['High'], low=df1['Low'], close=df1['Close'])])
+                fig = go.Figure(data=[go.Candlestick(x = df.index, name=f'{tickerSymbol} Price', open=df['Open'], 
+                    high=df['High'], low=df['Low'], close=df['Close'])])
 
             elif chart.lower() == 'line chart':
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(x = df.index, y = df1['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
+                fig.add_trace(go.Scatter(x = df.index, y = df['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
                     line=dict(color='black', width=2)))
 
-            fig.add_trace(go.Scatter(x = df.index, y=df1[f'SMA {SMA1}'], mode='lines', name= f'SMA {SMA1}'))
-            fig.add_trace(go.Scatter(x = df.index, y=df1[f'SMA {SMA2}'], mode='lines', name= f'SMA {SMA2}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df[f'SMA {SMA1}'], mode='lines', name= f'SMA {SMA1}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df[f'SMA {SMA2}'], mode='lines', name= f'SMA {SMA2}'))
             fig.update_layout(height=height)
 
-            return fig, SMA_result[0], SMA_result[1]
+            return fig, equity, df
 
         if strat.lower() == 'ema':
 
-            df2 = df.copy()
+            df = dataframe.copy()
             Wallet = wallet(settings['saldo'])
             EMA1, EMA2 = 20, 50
 
-            EMA_result = EMAStrategy(Wallet, EMA1, EMA2, df2)
-            df2 = EMA_result[1]
+            equity, df = EMAStrategy(Wallet, EMA1, EMA2, df)
 
             if chart.lower() == 'candlestick':
-                fig = go.Figure(data=[go.Candlestick(x = df.index, name=f'{tickerSymbol} Price', open=df2['Open'], 
-                    high=df2['High'], low=df2['Low'], close=df2['Close'])])
+                fig = go.Figure(data=[go.Candlestick(x = df.index, name=f'{tickerSymbol} Price', open=df['Open'], 
+                    high=df['High'], low=df['Low'], close=df['Close'])])
             elif chart.lower() == 'line chart':
                 fig = go.Figure()
-                fig.add_trace(go.Scatter(x = df.index, y=df2['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
+                fig.add_trace(go.Scatter(x = df.index, y=df['Adj Close'], mode='lines', name=f'{tickerSymbol} Price', 
                     line=dict(color='black', width=2)))
 
-            fig.add_trace(go.Scatter(x = df.index, y=df2[f'EMA {EMA1}'], mode='lines', name= f'EMA {EMA1}'))
-            fig.add_trace(go.Scatter(x = df.index, y=df2[f'EMA {EMA2}'], mode='lines', name= f'EMA {EMA2}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df[f'EMA {EMA1}'], mode='lines', name= f'EMA {EMA1}'))
+            fig.add_trace(go.Scatter(x = df.index, y=df[f'EMA {EMA2}'], mode='lines', name= f'EMA {EMA2}'))
             fig.update_layout(height=height)
 
-            return fig, EMA_result[0], EMA_result[1]
+            return fig, equity, df
         
     graph_data = graph_chart(chart)
+    df = graph_chart[2]
 
     fig1 = go.Figure()
-    fig1.add_trace(go.Scatter(x = graph_data[2].index, y=graph_data[2]['equity'], mode='lines', name=f'Equity', 
-        line=dict(color='black', width=2)))
+    fig1.add_trace(go.Scatter(x = df.index, y=df['equity'], mode='lines', name='Equity', line=dict(color='black', width=2)))
         
     return graph_data[0], fig1, graph_data[1]
 
