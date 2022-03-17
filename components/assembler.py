@@ -5,7 +5,7 @@ from components.fetchData import fecthData
 from components.graphing import graph_chart
 
 
-def main():
+def assembler():
     with open('components\config.json', 'r') as json_file:
         settings = json.load(json_file)
 
