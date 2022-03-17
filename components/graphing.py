@@ -3,7 +3,7 @@ import pandas as pd
 import json
 
 from components.wallet import wallet
-from components.algo import EMAStrategy, SMAStrategy
+from components.algorithms.SmaAndEma import EMAStrategy, SMAStrategy
 
 def graph_chart(chart, df):
         
