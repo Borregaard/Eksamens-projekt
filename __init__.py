@@ -5,20 +5,6 @@ import json
 
 app = Dash(__name__)
 
-
-def generate_table(dataframe, max_rows=100):
-    return html.Table([
-        html.Thead(
-            html.Tr([html.Th(col) for col in dataframe.columns])
-        ),
-        html.Tbody([
-            html.Tr([
-                html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-            ]) for i in range(min(len(dataframe), max_rows))
-        ])
-    ], style={})
-
-
 def updateJSON(id, value):
     json_file = open('components\config.json', 'r')
     Json_config = json.load(json_file)
