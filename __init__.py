@@ -97,7 +97,7 @@ def update_graph(n_clicks, strat, tickerSymbol, saldo, period, interval, chart):
     updateJSON('chart', chart)
     updateJSON('strat', strat)
 
-    data = main(strat.lower(), chart)
+    data = main()
     return data[0], data[1], f'''Your equity efter a period over {period} is: {round(data[2], 2)} USD, 
     your equity has increased by {round(100*((float(data[2])-float(saldo))/abs(float(saldo))))} %'''
 

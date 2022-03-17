@@ -12,14 +12,14 @@ def SMAStrategy(wallet, SMA_1, SMA_2, df):
     for x in range(len(df)):
         if df[f'SMA {SMA_1}'].iloc[x] > df[f'SMA {SMA_2}'].iloc[x] and wallet.trigger != 1:
             sell_signals.append(float('nan'))
-            buy_signals.append(df['Adj Close'].iloc[x])
+            buy_signals.append(df[f'SMA {SMA_2}'].iloc[x])
 
             wallet.buyOrder(df['Adj Close'].iloc[x])
             wallet.trigger = 1
 
         elif df[f'SMA {SMA_1}'].iloc[x] < df[f'SMA {SMA_2}'].iloc[x] and wallet.trigger != -1:
             buy_signals.append(float('nan'))
-            sell_signals.append(df['Adj Close'].iloc[x])
+            sell_signals.append(df[f'SMA {SMA_2}'].iloc[x])
 
             wallet.sellOrder(df['Adj Close'].iloc[x])
             wallet.trigger = -1
@@ -52,7 +52,7 @@ def EMAStrategy(wallet, SMA_1, SMA_2, df):
     for x in range(len(df)):
         if df[f'EMA {SMA_1}'].iloc[x] > df[f'EMA {SMA_2}'].iloc[x] and wallet.trigger != 1:
             sell_signals.append(float('nan'))
-            buy_signals.append(df['Adj Close'].iloc[x])
+            buy_signals.append(df[f'EMA {SMA_2}'].iloc[x])
 
             wallet.buyOrder(df['Adj Close'].iloc[x])
             wallet.trigger = 1
@@ -60,7 +60,7 @@ def EMAStrategy(wallet, SMA_1, SMA_2, df):
 
         elif df[f'EMA {SMA_1}'].iloc[x] < df[f'EMA {SMA_2}'].iloc[x] and wallet.trigger != -1:
             buy_signals.append(float('nan'))
-            sell_signals.append(df['Adj Close'].iloc[x])
+            sell_signals.append(df[f'EMA {SMA_2}'].iloc[x])
 
             wallet.sellOrder(df['Adj Close'].iloc[x])
             wallet.trigger = -1
