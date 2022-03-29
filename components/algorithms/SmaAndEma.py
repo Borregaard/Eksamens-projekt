@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def SMAStrategy(wallet, SMA_1, SMA_2, df):
 
     df[f'SMA {SMA_1}'] = df['Adj Close'].rolling(SMA_1).mean()
@@ -27,7 +28,7 @@ def SMAStrategy(wallet, SMA_1, SMA_2, df):
         else:
             buy_signals.append(float('nan'))
             sell_signals.append(float('nan'))
-        
+
         equity.append(wallet.equity(df['Adj Close'].iloc[x]))
 
     df['equity'] = equity
@@ -38,7 +39,7 @@ def SMAStrategy(wallet, SMA_1, SMA_2, df):
 
 
 def EMAStrategy(wallet, SMA_1, SMA_2, df):
-    
+
     df[f'SMA {SMA_1}'] = df['Adj Close'].rolling(SMA_1).mean()
     df[f'SMA {SMA_2}'] = df['Adj Close'].rolling(SMA_2).mean()
 
@@ -57,7 +58,6 @@ def EMAStrategy(wallet, SMA_1, SMA_2, df):
             wallet.buyOrder(df['Adj Close'].iloc[x])
             wallet.trigger = 1
 
-
         elif df[f'EMA {SMA_1}'].iloc[x] < df[f'EMA {SMA_2}'].iloc[x] and wallet.trigger != -1:
             buy_signals.append(float('nan'))
             sell_signals.append(df[f'EMA {SMA_2}'].iloc[x])
@@ -68,7 +68,7 @@ def EMAStrategy(wallet, SMA_1, SMA_2, df):
         else:
             buy_signals.append(float('nan'))
             sell_signals.append(float('nan'))
-        
+
         equity.append(wallet.equity(df['Adj Close'].iloc[x]))
 
     df['equity'] = equity
@@ -76,4 +76,3 @@ def EMAStrategy(wallet, SMA_1, SMA_2, df):
     df['sell_signals'] = sell_signals
 
     return wallet.equity(df['Adj Close'].iloc[-1]), df
-

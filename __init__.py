@@ -5,6 +5,7 @@ import json
 
 app = Dash(__name__)
 
+
 def updateJSON(id, value):
     json_file = open('components\config.json', 'r')
     Json_config = json.load(json_file)
@@ -31,10 +32,16 @@ app.layout = html.Div(
         html.Div(
             className='options-label',
             children=[
-                html.H4(children='Ticker Symbol', style={'textAlign': 'center'}),
-                html.H4(children='Saldo for account', style={'textAlign': 'center'}),
+                html.H4(children='Ticker Symbol',
+                        style={'textAlign': 'center'}),
+                
+                html.H4(children='Saldo for account',
+                        style={'textAlign': 'center'}),
+                
                 html.H4(children='Time Period', style={'textAlign': 'center'}),
-                html.H4(children='Interval for data point', style={'textAlign': 'center'}),
+                html.H4(children='Interval for data point',
+                        style={'textAlign': 'center'}),
+                
                 html.H4(children='Strategy', style={'textAlign': 'center'}),
                 html.H4(children='', style={'textAlign': 'center'}),
             ]),
@@ -50,17 +57,20 @@ app.layout = html.Div(
                 dcc.Dropdown(interval_range,
                              settings['interval'], id="interval"),
                 dcc.Dropdown(['Sma', 'Ema'], 'Sma', id='strat'),
-                html.Button(id='button_update', n_clicks=0, children='Update graph')
+                html.Button(id='button_update', n_clicks=0,
+                            children='Update graph')
             ]),
-            html.Div(
+        html.Div(
             className='chart-options',
             children=[
-                dcc.Dropdown(['Candlestick', 'line chart'], 'Candlestick', id='chart lines'),
+                dcc.Dropdown(['Candlestick', 'line chart'],
+                             'Candlestick', id='chart lines'),
             ]),
         html.H3(id='output-state', className='equity'),
         dcc.Graph(id='price-graph'),
         dcc.Graph(id='equity-graph')
     ])
+
 
 @app.callback(
     Output('price-graph', 'figure'),
@@ -74,7 +84,6 @@ app.layout = html.Div(
     State('interval', 'value'),
     State('chart lines', 'value')
 )
-
 def update_graph(n_clicks, strat, tickerSymbol, saldo, period, interval, chart):
     updateJSON('tickerSymbol', tickerSymbol)
     updateJSON('saldo', saldo)
@@ -86,6 +95,7 @@ def update_graph(n_clicks, strat, tickerSymbol, saldo, period, interval, chart):
     data = assembler()
     return data[0], data[1], f'''Your equity efter a period over {period} is: {round(data[2], 2)} USD, 
     your equity has increased by {round(100*((float(data[2])-float(saldo))/abs(float(saldo))))} %'''
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
