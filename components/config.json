@@ -1,9 +1,1 @@
-{
-    "tickerSymbol": "BTC-USD",
-    "period": "max",
-    "interval": "1mo",
-    "saldo": "10000",
-    "btcAmount": 0,
-    "chart": "Candlestick",
-    "strat": "Ema"
-}
+{"tickerSymbol": "BTC-USD", "period": "10y", "interval": "1wk", "saldo": 10000, "btcAmount": 0, "chart": "Candlestick", "strat": "Sma"}

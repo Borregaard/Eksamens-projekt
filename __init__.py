@@ -56,7 +56,7 @@ app.layout = html.Div(
                              '5y', '10y', 'ytd', 'max'], settings['period'], id="period"),
                 dcc.Dropdown(interval_range,
                              settings['interval'], id="interval"),
-                dcc.Dropdown(['Sma', 'Ema'], 'Sma', id='strat'),
+                dcc.Dropdown(['Sma', 'Ema'], settings['strat'], id='strat'),
                 html.Button(id='button_update', n_clicks=0,
                             children='Update graph')
             ]),

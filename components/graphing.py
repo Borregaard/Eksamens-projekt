@@ -18,11 +18,11 @@ def graph_chart(chart, df):
     strat = settings['strat'].upper()
 
     if strat.lower() == 'sma':
-        SMA1, SMA2 = 20, 50
+        SMA1, SMA2 = 1, 52
         equity, df = SMAStrategy(Wallet, SMA1, SMA2, df)
 
     if strat.lower() == 'ema':
-        SMA1, SMA2 = 20, 50
+        SMA1, SMA2 = 1, 92
         equity, df = EMAStrategy(Wallet, SMA1, SMA2, df)
 
     if chart.lower() == 'candlestick':

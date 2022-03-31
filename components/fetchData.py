@@ -12,7 +12,7 @@ def fecthData(TickerSymbol, saveCSV=False):
     df = pd.DataFrame(data)
 
     # Gem data til CSV file hvis nødvendig
-    if saveCSV:
+    if saveCSV == True:
         df.to_csv(f'{TickerSymbol}', index=True)
 
     return df

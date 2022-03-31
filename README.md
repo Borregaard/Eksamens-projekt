@@ -1,3 +1,5 @@
 # Eksamens_project
  
-For at køre programmet så skal du kører filen ```run.bat```
+1. Første gang du skal køre programmet skal du gøre filen ```ìmport.bat``` denne fil ville hente alle de afhængiheder programmet har
+
+2. For at køre programmet så skal du kører filen ```run.bat```
