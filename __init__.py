@@ -1,4 +1,3 @@
-from pydoc import classname
 from dash import Dash, dcc, html, Input, Output, State
 from components.assembler import assembler
 import json
@@ -45,6 +44,8 @@ app.layout = html.Div(
                 html.H4(children='Strategy', style={'textAlign': 'center'}),
                 html.H4(children='', style={'textAlign': 'center'}),
             ]),
+
+
         html.Div(
             className='options',
             children=[
@@ -60,13 +61,17 @@ app.layout = html.Div(
                 html.Button(id='button_update', n_clicks=0,
                             children='Update graph')
             ]),
+
+
         html.Div(
             className='chart-options',
             children=[
                 dcc.Dropdown(['Candlestick', 'line chart'],
                              'Candlestick', id='chart lines'),
             ]),
+
         html.H3(id='output-state', className='equity'),
+
         dcc.Graph(id='price-graph'),
         dcc.Graph(id='equity-graph')
     ])
