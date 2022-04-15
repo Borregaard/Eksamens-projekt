@@ -16,3 +16,5 @@ def fecthData(TickerSymbol, saveCSV=False):
         df.to_csv(f'{TickerSymbol}', index=True)
 
     return df
+
+
