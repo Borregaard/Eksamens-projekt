@@ -11,10 +11,8 @@ def fecthData(TickerSymbol, saveCSV=False):
                        interval=settings["interval"], index_col='date', parse_dates=True)
     df = pd.DataFrame(data)
 
-    # Gem data til CSV file hvis nødvendig
     if saveCSV == True:
         df.to_csv(f'{TickerSymbol}', index=True)
 
     return df
-
 
